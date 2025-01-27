@@ -25,7 +25,7 @@ interface AppContainer {
 }
 
 class DefaultAppContainer : AppContainer {
-    private val baseUrl = "http://10.0.2.2:81/FinalPam/" // localhost diganti IP jika dirun
+    private val baseUrl = "http://10.0.2.2:81/umyTI/" // localhost diganti IP jika dirun
     private val json = Json { ignoreUnknownKeys = true }
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
