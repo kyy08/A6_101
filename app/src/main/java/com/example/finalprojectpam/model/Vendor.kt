@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Vendor(
-    @SerialName("id_vendor") val idvendor: String,
-    @SerialName("nama_vendor") val namavendor: String,
-    @SerialName("jenis_vendor") val jenisvendor: String,
-    @SerialName("kontak_vendor") val kontakvendor: String,
+    val id_vendor: String,
+    val nama_vendor: String,
+    val jenis_vendor: String,
+    val kontak_vendor: String,
 )
