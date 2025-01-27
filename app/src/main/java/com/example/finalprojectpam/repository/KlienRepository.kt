@@ -2,47 +2,44 @@ package com.example.finalprojectpam.repository
 
 import com.example.finalprojectpam.model.Klien
 import com.example.finalprojectpam.service.KlienService
-import java.io.IOException
 
-interface KlienRepository{
+interface KlienRepository {
     suspend fun getKlien(): List<Klien>
-    suspend fun insertKlien(mahasiswa: Klien)
-    suspend fun updateKlien(id: String, klien: Klien)
-    suspend fun deleteKlien(id: String)
-    suspend fun getKlienById(id: String): Klien
+    suspend fun insertKlien(klien: Klien)
+    suspend fun updateKlien(id_klien: String, klien: Klien)
+    suspend fun deleteKlien(id_klien: String)
+    suspend fun getKlienById(id_klien: String): Klien
 }
 
-class NetworkKlienRepository(
-    private val klienApiService: KlienService
-) : KlienRepository{
+class NetworkKlienRepository(private val klienService: KlienService)
+    : KlienRepository
+{
+    override suspend fun getKlien(): List<Klien> = klienService.getKlien()
+
     override suspend fun insertKlien(klien: Klien) {
-        klienApiService.insertKlien(klien)
+        klienService.insertKlien(klien)
     }
 
-    override suspend fun updateKlien(id: String, klien: Klien) {
-        klienApiService.updateKlien(id, klien)
+    override suspend fun updateKlien(id_klien: String, klien: Klien) {
+        klienService.updateKlien(id_klien, klien)
     }
 
-    override suspend fun deleteKlien(id: String) {
+    override suspend fun deleteKlien(id_klien: String) {
         try {
-            val response = klienApiService.deleteKlien(id)
-            if (!response.isSuccessful){
-                throw IOException("Failed to delete klien. HTTP Status code: ${response.code()}")
-            }else{
+            val response = klienService.deleteKlien(id_klien)
+            if (!response.isSuccessful) {
+                throw Exception("Failed to delete klien. HTTP Status Code: ${response.code()}")
+            }
+            else{
                 response.message()
                 println(response.message())
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             throw e
         }
     }
 
-    override suspend fun getKlien(): List<Klien> = klienApiService.getKlien()
-    override suspend fun getKlienById(id: String): Klien {
-        try {
-            return klienApiService.getKlienById(id)
-        } catch (e: IOException) {
-            throw IOException("Failed to fetch klien with Id: $id. Network error occurred.", e)
-        }
+    override suspend fun getKlienById(id_klien: String): Klien {
+        return klienService.getKlienById(id_klien)
     }
 }
