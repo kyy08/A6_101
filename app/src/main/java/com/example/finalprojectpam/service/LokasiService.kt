@@ -15,18 +15,18 @@ interface LokasiService {
         "Accept: application/json",
         "Content-Type: application/json",
     )
-    @GET("read.php")
+    @GET("bacalokasi.php")
     suspend fun getLokasi(): List<Lokasi>
 
-    @GET("read1.php/{id}")
-    suspend fun getLokasiById(@Query("id") id: String): Lokasi
+    @GET("baca1lokasi.php/{id_lokasi}")
+    suspend fun getLokasiById(@Query("id_lokasi") id_lokasi: String): Lokasi
 
-    @POST("create.php")
+    @POST("insertlokasi.php")
     suspend fun insertLokasi(@Body lokasi: Lokasi)
 
-    @PUT("update.php/{id}")
-    suspend fun updateLokasi(@Query("id") id: String, @Body lokasi: Lokasi)
+    @PUT("editlokasi.php")
+    suspend fun updateLokasi(@Query("id_lokasi")id_lokasi: String, @Body lokasi: Lokasi)
 
-    @DELETE("delete.php/{id}")
-    suspend fun deleteLokasi(@Query("id") id: String): Response<Void>
+    @DELETE("deletelokasi.php/{id_lokasi}")
+    suspend fun deleteLokasi(@Query("id_lokasi")id_lokasi: String): Response<Void>
 }
