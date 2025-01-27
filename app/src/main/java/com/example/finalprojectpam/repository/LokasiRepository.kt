@@ -2,33 +2,34 @@ package com.example.finalprojectpam.repository
 
 import com.example.finalprojectpam.model.Lokasi
 import com.example.finalprojectpam.service.LokasiService
-import java.io.IOException
 
 interface LokasiRepository {
     suspend fun getLokasi(): List<Lokasi>
     suspend fun insertLokasi(lokasi: Lokasi)
-    suspend fun updateLokasi(id: String, lokasi: Lokasi)
-    suspend fun deleteLokasi(id: String)
-    suspend fun getLokasiById(id: String): Lokasi
+    suspend fun updateLokasi(id_lokasi: String, lokasi: Lokasi)
+    suspend fun deleteLokasi(id_lokasi: String)
+    suspend fun getLokasiById(id_lokasi: String): Lokasi
 }
 
-class NetworkLokasiRepository(
-    private val lokasiApiService: LokasiService
-) : LokasiRepository {
+class NetworkLokasiRepository(private val lokasiService: LokasiService)
+    : LokasiRepository
+{
+    override suspend fun getLokasi(): List<Lokasi> = lokasiService.getLokasi()
+
     override suspend fun insertLokasi(lokasi: Lokasi) {
-        lokasiApiService.insertLokasi(lokasi)
+        lokasiService.insertLokasi(lokasi)
     }
 
-    override suspend fun updateLokasi(id: String, lokasi: Lokasi) {
-        lokasiApiService.updateLokasi(id, lokasi)
-    }
+    override suspend fun updateLokasi(id_lokasi: String, lokasi: Lokasi) {
+        lokasiService.updateLokasi(id_lokasi, lokasi)    }
 
-    override suspend fun deleteLokasi(id: String) {
+    override suspend fun deleteLokasi(id_lokasi: String) {
         try {
-            val response = lokasiApiService.deleteLokasi(id)
+            val response = lokasiService.deleteLokasi(id_lokasi)
             if (!response.isSuccessful) {
-                throw IOException("Failed to delete lokasi. HTTP Status code: ${response.code()}")
-            } else {
+                throw Exception("Failed to delete lokasi. HTTP Status Code: ${response.code()}")
+            }
+            else{
                 response.message()
                 println(response.message())
             }
@@ -37,12 +38,7 @@ class NetworkLokasiRepository(
         }
     }
 
-    override suspend fun getLokasi(): List<Lokasi> = lokasiApiService.getLokasi()
-    override suspend fun getLokasiById(id: String): Lokasi {
-        try {
-            return lokasiApiService.getLokasiById(id)
-        } catch (e: IOException) {
-            throw IOException("Failed to fetch lokasi with Id: $id. Network error occurred.", e)
-        }
+    override suspend fun getLokasiById(id_lokasi: String): Lokasi {
+        return lokasiService.getLokasiById(id_lokasi)
     }
 }
