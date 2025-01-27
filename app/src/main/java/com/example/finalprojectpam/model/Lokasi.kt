@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Lokasi(
-    @SerialName("id_lokasi") val idlokasi: String,
-    @SerialName("nama_lokasi") val namalokasi: String,
-    @SerialName("alamat_lokasi") val alamatlokasi: String,
+    val id_lokasi: String,
+    val nama_lokasi: String,
+    val alamat_lokasi: String,
     val kapasitas: String,
 
     )
