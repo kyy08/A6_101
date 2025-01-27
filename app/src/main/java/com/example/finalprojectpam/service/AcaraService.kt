@@ -15,19 +15,18 @@ interface AcaraService {
         "Accept: application/json",
         "Content-Type: application/json",
     )
-    @GET("read.php")
+    @GET("bacaacara.php")
     suspend fun getAcara(): List<Acara>
 
-    @GET("read1.php/{id}")
-    suspend fun getAcaraById(@Query("id") id: String): Acara
+    @GET("baca1acara.php/{id_acara}")
+    suspend fun getAcaraById(@Query("id_acara") id_acara: String): Acara
 
-    @POST("create.php")
+    @POST("insertacara.php")
     suspend fun insertAcara(@Body acara: Acara)
 
-    @PUT("update.php/{id}")
-    suspend fun updateAcara(@Query("id")id: String, @Body acara: Acara)
+    @PUT("editacara.php")
+    suspend fun updateAcara(@Query("id_acara")id_acara: String, @Body acara: Acara)
 
-    @DELETE("delete.php/{id}")
-    suspend fun deleteAcara(@Query("nim")nim: String): Response<Void>
-
+    @DELETE("deleteacara.php/{id_acara}")
+    suspend fun deleteAcara(@Query("id_acara")id_acara: String): Response<Void>
 }
