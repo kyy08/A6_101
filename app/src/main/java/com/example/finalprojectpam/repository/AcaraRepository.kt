@@ -2,48 +2,44 @@ package com.example.finalprojectpam.repository
 
 import com.example.finalprojectpam.model.Acara
 import com.example.finalprojectpam.service.AcaraService
-import java.io.IOException
 
 interface AcaraRepository{
     suspend fun getAcara(): List<Acara>
     suspend fun insertAcara(acara: Acara)
-    suspend fun updateAcara(id: String, acara: Acara)
-    suspend fun deleteAcara(id: String)
-    suspend fun getAcaraById(id: String): Acara
+    suspend fun updateAcara(id_acara: String, acara: Acara)
+    suspend fun deleteAcara(id_acara: String)
+    suspend fun getAcaraById(id_acara: String): Acara
 }
 
-class NetworkAcaraRepository(
-    private val acaraApiService: AcaraService
-) : AcaraRepository{
+class NetworkAcaraRepository(private val acaraService: AcaraService)
+    : AcaraRepository
+{
+    override suspend fun getAcara(): List<Acara> = acaraService.getAcara()
+
     override suspend fun insertAcara(acara: Acara) {
-        acaraApiService.insertAcara(acara)
+        acaraService.insertAcara(acara)
     }
 
-    override suspend fun updateAcara(id: String, acara: Acara) {
-        acaraApiService.updateAcara(id,acara)
+    override suspend fun updateAcara(id_acara: String, acara: Acara) {
+        acaraService.updateAcara(id_acara, acara)
     }
 
-    override suspend fun deleteAcara(id: String) {
+    override suspend fun deleteAcara(id_acara: String) {
         try {
-            val response = acaraApiService.deleteAcara(id)
-            if (!response.isSuccessful){
-                throw IOException("Failed to delete acara. HTTP Status code: ${response.code()}")
-            }else{
+            val response = acaraService.deleteAcara(id_acara)
+            if (!response.isSuccessful) {
+                throw Exception("Failed to delete acara. HTTP Status Code: ${response.code()}")
+            }
+            else{
                 response.message()
                 println(response.message())
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             throw e
         }
     }
 
-    override suspend fun getAcara(): List<Acara> = acaraApiService.getAcara()
-    override suspend fun getAcaraById(id: String): Acara {
-        try {
-            return acaraApiService.getAcaraById(id)
-        } catch (e: IOException) {
-            throw IOException("Failed to fetch acara with Id: $id. Network error occurred.", e)
-        }
+    override suspend fun getAcaraById(id_acara: String): Acara {
+        return acaraService.getAcaraById(id_acara)
     }
-
 }
