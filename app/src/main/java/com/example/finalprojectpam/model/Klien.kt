@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Klien(
-    @SerialName("id_klien") val idklien: String,
-    @SerialName("nama_klien") val namaklien : String,
-    @SerialName("kontak_klien") val kontakklien: String,
+   val id_klien: String,
+   val nama_klien : String,
+   val kontak_klien: String,
 )
 
