@@ -15,18 +15,18 @@ interface VendorService {
         "Accept: application/json",
         "Content-Type: application/json",
     )
-    @GET("read.php")
+    @GET("bacavendor.php")
     suspend fun getVendor(): List<Vendor>
 
-    @GET("read1.php/{id}")
-    suspend fun getVendorById(@Query("id") id: String): Vendor
+    @GET("baca1vendor.php/{id_vendor}")
+    suspend fun getVendorById(@Query("id_vendor") id_vendor: String): Vendor
 
-    @POST("create.php")
+    @POST("insertvendor.php")
     suspend fun insertVendor(@Body vendor: Vendor)
 
-    @PUT("update.php/{id}")
-    suspend fun updateVendor(@Query("id") id: String, @Body vendor: Vendor)
+    @PUT("editvendor.php")
+    suspend fun updateVendor(@Query("id_vendor")id_vendor: String, @Body vendor: Vendor)
 
-    @DELETE("delete.php/{id}")
-    suspend fun deleteVendor(@Query("id") id: String): Response<Void>
+    @DELETE("deletevendor.php/{id_vendor}")
+    suspend fun deleteVendor(@Query("id_vendor")id_vendor: String): Response<Void>
 }
