@@ -1,6 +1,5 @@
 package com.example.finalprojectpam.service
 
-import com.example.finalprojectpam.model.Acara
 import com.example.finalprojectpam.model.Klien
 import retrofit2.Response
 import retrofit2.http.Body
@@ -16,18 +15,18 @@ interface KlienService {
         "Accept: application/json",
         "Content-Type: application/json",
     )
-    @GET("read.php")
+    @GET("bacaklien.php")
     suspend fun getKlien(): List<Klien>
 
-    @GET("read1.php/{id}")
-    suspend fun getKlienById(@Query("id") id: String): Klien
+    @GET("baca1klien.php/{id_klien}")
+    suspend fun getKlienById(@Query("id_klien") id_klien: String): Klien
 
-    @POST("create.php")
+    @POST("insertklien.php")
     suspend fun insertKlien(@Body klien: Klien)
 
-    @PUT("update.php/{id}")
-    suspend fun updateKlien(@Query("id")id: String, @Body klien: Klien)
+    @PUT("editklien.php")
+    suspend fun updateKlien(@Query("id_klien")id_klien: String, @Body klien: Klien)
 
-    @DELETE("delete.php/{id}")
-    suspend fun deleteKlien(@Query("id")id: String): Response<Void>
+    @DELETE("deleteklien.php/{id_klien}")
+    suspend fun deleteKlien(@Query("id_klien")id_klien: String): Response<Void>
 }
